@@ -12,6 +12,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.9
+    - name: Set version number
+      if: startsWith(github.ref, 'refs/tags')
+      run: >-
+        sed -i "s/dev/${GITHUB_REF/refs\/tags\/v}/" setup.py
     - name: Install pypa/build
       run: >-
         python -m

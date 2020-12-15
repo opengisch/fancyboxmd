@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="fancyboxmd",
-    version="1.0.0",
+    version="dev",
     description='Extension for python-markdown that adds markdown syntax for !![image.jpg] for fancybox tag.',
     long_description=README,
     long_description_content_type="text/markdown",
