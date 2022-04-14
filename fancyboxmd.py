@@ -1,5 +1,6 @@
 from markdown.extensions import Extension
 from markdown.inlinepatterns import LinkInlineProcessor
+
 import xml.etree.ElementTree as etree
 
 
@@ -29,6 +30,12 @@ class FancyBoxInlineProcessor(LinkInlineProcessor):
         if not handled:
             return None, None, None
 
+        splitted = src.split(",")
+        src = splitted[0]
+        width = self.preview_width
+        if len(splitted) > 1:
+            width = splitted[1].strip()
+
         el_figure = etree.Element("figure")
         el_figcaption = etree.Element("figcaption")
 
@@ -44,7 +51,7 @@ class FancyBoxInlineProcessor(LinkInlineProcessor):
 
         el_img = etree.Element("img")
         el_img.set("src", src)
-        el_img.set("width", self.preview_width)
+        el_img.set("width", width)
         el_img.set("title", title)
         el_img.set('alt', title)
 
@@ -60,7 +67,7 @@ FB_BRACKETS_RE = r"!!\["
 class FancyBoxExtension(Extension):
     """
     The FancyBoxExtension creates fancybox attributes on images using exclamation marks.
-    !![Title](image_url_here.jpg "Description")
+    !![Title](image_url_here.jpg "Description", width)
     """
 
     def __init__(self, **kwargs):
